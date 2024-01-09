@@ -3,6 +3,9 @@ import { useEffect } from 'react';
 
 import styles from './PageHeader.module.css';
 
+/**
+ * Component responsible for the header content
+ */
 export default function PageHeader() {
   useEffect(() => {
     document.title = 'WOW Arena Sessions';
