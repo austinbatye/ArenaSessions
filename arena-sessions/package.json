@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node ./src/server.js",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
     "lint": "eslint --cache --max-warnings-0 --ext .ts,.tsx src",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
