@@ -1,0 +1,19 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px;
+    line-height: 1.25;
+    color: white;
+}
+
+.main:hover {
+    border: 1px solid yellow;
+    border-radius: 3px;
+    padding: 4px 9px;
+    cursor: pointer;
+}
+
+.name {
+    font-size: 20px;
+    color: #FFFF00;
+}

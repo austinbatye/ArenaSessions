@@ -1,6 +1,6 @@
 .body {
-    height: 10vh;
-    border-bottom: 2px solid black;
+    height: 10%;
+    border-bottom: 2px solid #FFFFFF;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -1,15 +1,18 @@
-'use client';
 import { FunctionComponent } from 'react';
 
-import { useCharacters } from '@/hooks/useCharacters';
+import Menu from '../character-menu/Menu';
+import styles from './PageContent.module.css';
 
 /**
  * Component responsible for rendering the main page content
  */
 const PageContent: FunctionComponent = () => {
-  const { isLoading, characters } = useCharacters();
-
-  return <div>Page Content</div>;
+  return (
+    <div className={styles.main}>
+      <div>Page Content</div>
+      <Menu />
+    </div>
+  );
 };
 
 export default PageContent;

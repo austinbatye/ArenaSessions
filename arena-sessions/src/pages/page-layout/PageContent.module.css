@@ -1,0 +1,6 @@
+.main {
+    display: flex;
+    padding: 25px;
+    height: 90%; /* 10% for pageHeader */
+    overflow: hidden;
+}

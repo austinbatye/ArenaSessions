@@ -10,6 +10,7 @@
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
+    "@fluentui/react": "^8.114.1",
     "@prisma/client": "^5.7.1",
     "next": "14.0.4",
     "react": "^18",

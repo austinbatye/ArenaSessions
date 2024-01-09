@@ -1,0 +1,12 @@
+.main {
+    position: absolute;
+    right: 25px;
+    width: 17%;
+    height: calc(90% - 50px); /* 90% of content height and 50px in padding */
+    border: 2px solid #575958;
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
