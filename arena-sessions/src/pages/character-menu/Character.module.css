@@ -1,6 +1,7 @@
 .main {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 5px 10px;
     line-height: 1.25;
     color: white;
@@ -16,4 +17,8 @@
 .name {
     font-size: 20px;
     color: #FFFF00;
+}
+
+.delete {
+    align-self: center;
 }

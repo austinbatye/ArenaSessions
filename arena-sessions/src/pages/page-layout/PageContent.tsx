@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 
-import Menu from '../character-menu/Menu';
+import CharacterMenu from '../character-menu/CharacterMenu';
 import styles from './PageContent.module.css';
 
 /**
@@ -10,7 +10,7 @@ const PageContent: FunctionComponent = () => {
   return (
     <div className={styles.main}>
       <div>Page Content</div>
-      <Menu />
+      <CharacterMenu />
     </div>
   );
 };

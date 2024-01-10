@@ -1,5 +1,9 @@
 import { Character } from '@/models';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+const getAllRoute = '/api/characters/all';
+const createRoute = '/api/characters/create';
+const deleteRoute = '/api/characters/delete/';
 
 /** Object result of the useCharacters react hook */
 export interface useCharactersResult {
@@ -8,6 +12,12 @@ export interface useCharactersResult {
 
   // list of characters retrieved from fetch-all query
   characters: Character[];
+
+  // callback function to create a new character in the list
+  createCharacter: () => void;
+
+  // callback function to delete a character from the list
+  deleteCharacter: () => void;
 }
 
 /**
@@ -22,21 +32,7 @@ export function useCharacters() {
 
   useEffect(() => {
     setIsLoading(true);
-
     try {
-      const getCharacters = async () => {
-        try {
-          const response = await fetch('/api/characters/all', {
-            method: 'GET',
-          });
-
-          const characters: Character[] = await response.json();
-          setCharacters(characters);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-
       getCharacters();
     } catch (err) {
       console.error(err);
@@ -46,5 +42,63 @@ export function useCharacters() {
     }
   }, []);
 
-  return { isLoading, characters };
+  const createCharacter = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const mockCharacter: Character = {
+        name: 'mock',
+        class: 'warlock',
+        spec: 'affliction',
+      };
+
+      await fetch(createRoute, {
+        method: 'POST',
+        headers: {
+          Accept: 'application.json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(mockCharacter),
+      });
+
+      await getCharacters();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const deleteCharacter = useCallback(async (id: number) => {
+    setIsLoading(true);
+    try {
+      await fetch(`${deleteRoute}${id}`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application.json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      await getCharacters();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  return { isLoading, characters, createCharacter, deleteCharacter };
+
+  async function getCharacters() {
+    try {
+      const response = await fetch(getAllRoute, {
+        method: 'GET',
+      });
+
+      const characters: Character[] = await response.json();
+      setCharacters(characters);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 }

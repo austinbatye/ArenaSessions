@@ -1,0 +1,13 @@
+.main {
+    background-color: #680000;
+    color: #FFFF00;
+    border: 1px solid #53655F;
+    border-radius: 3px;
+}
+
+.main:hover {
+    background-color: #2D0201;
+    color: #FFFF00;
+    border: 1px solid #53655F;
+    border-radius: 3px;
+}
