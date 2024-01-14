@@ -3,7 +3,9 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import { useCharacters } from '@/hooks/useCharacters';
 import Character from './Character';
-import CreateButton from './CreateButton';
+import CreateCharacterDialog from './dialogs/CreateCharacterDialog';
+import StyledButton from '@/tools/StyledButton';
+import * as ModelCharacter from '@/models';
 import styles from './CharacterMenu.module.css';
 
 /**
@@ -13,7 +15,6 @@ const CharacterMenu: FunctionComponent = () => {
   const { isLoading, characters, createCharacter, deleteCharacter } =
     useCharacters();
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  console.log(showCreateDialog);
 
   useEffect(() => {
     setShowCreateDialog(false);
@@ -30,7 +31,18 @@ const CharacterMenu: FunctionComponent = () => {
   return (
     <div className={styles.main}>
       {getMainContent()}
-      <CreateButton onCreate={() => handleCreate()} />
+      <StyledButton
+        isPrimary={true}
+        onClick={() => setShowCreateDialog(true)}
+        text={'Create new character'}
+        className={styles.createButton}
+      />
+
+      <CreateCharacterDialog
+        isVisible={showCreateDialog}
+        onClose={() => setShowCreateDialog(false)}
+        onSubmit={(char) => handleCreate(char)}
+      />
     </div>
   );
 
@@ -55,9 +67,9 @@ const CharacterMenu: FunctionComponent = () => {
     return <div>{main}</div>;
   }
 
-  async function handleCreate() {
-    setShowCreateDialog(true);
-    await createCharacter();
+  async function handleCreate(char: ModelCharacter.Character) {
+    setShowCreateDialog(false);
+    await createCharacter(char);
   }
 };
 

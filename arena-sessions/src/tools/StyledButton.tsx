@@ -9,6 +9,7 @@ import styles from './StyledButton.module.css';
  */
 export interface StyledButtonProps {
   className?: string;
+  isPrimary?: boolean;
   text: string;
   onClick?: () => void;
 }
@@ -19,11 +20,14 @@ export interface StyledButtonProps {
 const StyledButton: FunctionComponent<StyledButtonProps> = (
   props
 ) => {
-  const { className = '', text, onClick } = props;
+  const { className = '', isPrimary = false, text, onClick } = props;
 
   return (
     <DefaultButton
-      className={cx(styles.main, className)}
+      className={cx(
+        isPrimary ? styles.primary : styles.default,
+        className
+      )}
       onClick={() => onClick?.()}
     >
       {text}
