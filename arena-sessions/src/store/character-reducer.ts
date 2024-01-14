@@ -1,9 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { AppState } from './store';
+import { Character } from '@/models';
 
+// Interface for the reducer's state
 export interface CharacterState {
-  selectedCharacter: string | null;
+  selectedCharacter: Character | null;
 }
 
 // Initial state
@@ -20,7 +22,7 @@ export const characterSlice = createSlice({
     },
     selectCharacter: (
       state: CharacterState,
-      action: PayloadAction<string>
+      action: PayloadAction<Character>
     ) => {
       state.selectedCharacter = action.payload;
     },

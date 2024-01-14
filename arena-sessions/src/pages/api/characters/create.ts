@@ -4,6 +4,15 @@ import { prisma } from '@/apis';
 import { Character } from '@/models';
 
 /**
+ * Request model for creating a character
+ */
+export interface CreateCharacterRequest {
+  name: string;
+  class: string;
+  spec: string;
+}
+
+/**
  * POST /api/characters/create
  * Function handler for creating a new character in the db
  *
