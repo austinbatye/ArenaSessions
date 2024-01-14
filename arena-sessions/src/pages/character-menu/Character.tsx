@@ -1,7 +1,11 @@
 import { FunctionComponent } from 'react';
 
 import { Character } from '@/models';
-import { capitalizeOnlyFirstLetter, getClassColor } from '@/utils';
+import {
+  capitalizeOnlyFirstLetter,
+  getClassColor,
+  getDeDupedSpec,
+} from '@/utils';
 import styles from './Character.module.css';
 import { IconButton } from '@fluentui/react';
 /**
@@ -37,7 +41,7 @@ const Character: FunctionComponent<CharacterProps> = (props) => {
           Level 70{' '}
           <span style={{ color: getClassColor(character.class) }}>
             {capitalizeOnlyFirstLetter(
-              `${character.spec} ${character.class}`
+              `${getDeDupedSpec(character.spec)} ${character.class}`
             )}
           </span>
         </div>

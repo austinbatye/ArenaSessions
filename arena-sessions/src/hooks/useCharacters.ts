@@ -14,7 +14,7 @@ export interface useCharactersResult {
   characters: Character[];
 
   // callback function to create a new character in the list
-  createCharacter: () => void;
+  createCharacter: (character: Character) => void;
 
   // callback function to delete a character from the list
   deleteCharacter: () => void;
@@ -42,31 +42,28 @@ export function useCharacters() {
     }
   }, []);
 
-  const createCharacter = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const mockCharacter: Character = {
-        name: 'mock',
-        class: 'warlock',
-        spec: 'affliction',
-      };
+  const createCharacter = useCallback(
+    async (character: Character) => {
+      setIsLoading(true);
+      try {
+        await fetch(createRoute, {
+          method: 'POST',
+          headers: {
+            Accept: 'application.json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(character),
+        });
 
-      await fetch(createRoute, {
-        method: 'POST',
-        headers: {
-          Accept: 'application.json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(mockCharacter),
-      });
-
-      await getCharacters();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        await getCharacters();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   const deleteCharacter = useCallback(async (id: number) => {
     setIsLoading(true);

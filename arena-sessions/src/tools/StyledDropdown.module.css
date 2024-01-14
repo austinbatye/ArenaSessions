@@ -1,0 +1,12 @@
+.label {
+    color: #FFFF00;
+    font-size: 14px;
+}
+
+.item:hover {
+    cursor: pointer;
+}
+
+.header:hover {
+    cursor: default;
+}
