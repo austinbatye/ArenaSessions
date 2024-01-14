@@ -1,4 +1,6 @@
 import { FunctionComponent } from 'react';
+import cx from 'classnames';
+import { useDispatch } from 'react-redux';
 
 import { Character } from '@/models';
 import {
@@ -6,13 +8,15 @@ import {
   getClassColor,
   getDeDupedSpec,
 } from '@/utils';
-import styles from './Character.module.css';
 import { IconButton } from '@fluentui/react';
+import { AppDispatch, selectCharacter } from '@/store';
+import styles from './Character.module.css';
 /**
  * Props for the Character menu component
  */
 export interface CharacterProps {
   character: Character;
+  selectedId?: string;
 
   deleteCharacter: (id: number) => void;
 }
@@ -21,7 +25,10 @@ export interface CharacterProps {
  * Component responsible for rendering details for a single character
  */
 const Character: FunctionComponent<CharacterProps> = (props) => {
-  const { character, deleteCharacter } = props;
+  const { character, selectedId, deleteCharacter } = props;
+  const dispatch = useDispatch<AppDispatch>();
+
+  const isSelected = selectedId === character.id.toString();
 
   if (
     character.name == null ||
@@ -32,7 +39,12 @@ const Character: FunctionComponent<CharacterProps> = (props) => {
   }
 
   return (
-    <div className={styles.main}>
+    <div
+      className={cx(styles.main, isSelected ? styles.selected : '')}
+      onClick={() =>
+        !isSelected && dispatch(selectCharacter(character))
+      }
+    >
       <div>
         <div className={styles.name}>
           {capitalizeOnlyFirstLetter(character.name)}

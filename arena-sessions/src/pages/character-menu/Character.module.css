@@ -8,10 +8,17 @@
 }
 
 .main:hover {
-    border: 1px solid yellow;
+    border: 1px solid #FFFF00;
     border-radius: 3px;
     padding: 4px 9px;
     cursor: pointer;
+}
+
+.selected {
+    padding: 4px 9px;
+    border: 1px solid #FFFF0060;
+    /* background-color: #FFFF0040; */
+    background-color: #1C241D;
 }
 
 .name {

@@ -1,5 +1,7 @@
-import { Character } from '@/models';
 import { useCallback, useEffect, useState } from 'react';
+
+import { Character } from '@/models';
+import { CreateCharacterRequest } from '@/pages/api/characters/create';
 
 const getAllRoute = '/api/characters/all';
 const createRoute = '/api/characters/create';
@@ -43,7 +45,7 @@ export function useCharacters() {
   }, []);
 
   const createCharacter = useCallback(
-    async (character: Character) => {
+    async (character: CreateCharacterRequest) => {
       setIsLoading(true);
       try {
         await fetch(createRoute, {

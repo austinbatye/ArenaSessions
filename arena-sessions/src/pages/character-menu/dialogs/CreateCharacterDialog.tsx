@@ -5,7 +5,7 @@ import {
   SelectableOptionMenuItemType,
 } from '@fluentui/react';
 
-import { Character } from '@/models';
+import { CreateCharacterRequest } from '@/pages/api/characters/create';
 import {
   classSpecs,
   getClassFromSpec,
@@ -22,7 +22,7 @@ import StyledInput from '@/tools/StyledInput';
 export interface CreateCharacterDialogProps {
   isVisible: boolean;
   onClose: () => void;
-  onSubmit: (character: Character) => void;
+  onSubmit: (character: CreateCharacterRequest) => void;
 }
 
 /**
