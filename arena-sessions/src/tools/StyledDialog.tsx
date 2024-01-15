@@ -10,6 +10,7 @@ export interface StyledDialogProps {
   children?: any;
   isVisible: boolean;
   title: string;
+  submitText?: string;
   onClose: () => void;
   onSubmit: () => void;
 }
@@ -20,7 +21,14 @@ export interface StyledDialogProps {
 const StyledDialog: FunctionComponent<StyledDialogProps> = (
   props
 ) => {
-  const { children, isVisible, title, onClose, onSubmit } = props;
+  const {
+    children,
+    isVisible,
+    submitText,
+    title,
+    onClose,
+    onSubmit,
+  } = props;
 
   if (!isVisible) {
     return null;
@@ -38,7 +46,7 @@ const StyledDialog: FunctionComponent<StyledDialogProps> = (
           <StyledButton
             className={styles.buttonPadding}
             isPrimary={true}
-            text="Create"
+            text={submitText ?? 'Submit'}
             onClick={onSubmit}
           />
           <StyledButton

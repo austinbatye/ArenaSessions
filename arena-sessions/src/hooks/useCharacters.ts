@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Character } from '@/models';
 import { CreateCharacterRequest } from '@/pages/api/characters/create';
+import { AppDispatch, clearCharacterSelection } from '@/store';
 
 const getAllRoute = '/api/characters/all';
 const createRoute = '/api/characters/create';
@@ -29,6 +31,7 @@ export interface useCharactersResult {
  *      const { isLoading, characters } = useCharacters();
  */
 export function useCharacters() {
+  const dispatch = useDispatch<AppDispatch>();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -79,6 +82,7 @@ export function useCharacters() {
       });
 
       await getCharacters();
+      dispatch(clearCharacterSelection());
     } catch (err) {
       console.error(err);
     } finally {
