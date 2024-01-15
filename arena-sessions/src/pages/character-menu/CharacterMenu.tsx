@@ -7,20 +7,27 @@ import Character from './Character';
 import CreateCharacterDialog from './dialogs/CreateCharacterDialog';
 import StyledButton from '@/tools/StyledButton';
 import { CreateCharacterRequest } from '../api/characters/create';
-import { AppState, selectSelectedCharacter } from '@/store';
+import { AppDispatch, selectSelectedCharacter } from '@/store';
+import DeleteCharacterDialog from './dialogs/DeleteCharacterDialog';
 import styles from './CharacterMenu.module.css';
 
 /**
  * Component responsible for displaying the character menu on the right side of the screen
  */
 const CharacterMenu: FunctionComponent = () => {
+  const selectedCharacter = useSelector(selectSelectedCharacter);
+
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] =
+    useState<boolean>(false);
+
+  // Characters hook
   const { isLoading, characters, createCharacter, deleteCharacter } =
     useCharacters();
-  const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const selectedCharacter = useSelector(selectSelectedCharacter);
 
   useEffect(() => {
     setShowCreateDialog(false);
+    setShowDeleteDialog(false);
   }, []);
 
   if (isLoading) {
@@ -49,6 +56,12 @@ const CharacterMenu: FunctionComponent = () => {
         onClose={() => setShowCreateDialog(false)}
         onSubmit={(char) => handleCreate(char)}
       />
+
+      <DeleteCharacterDialog
+        isVisible={showDeleteDialog && selectedCharacter != null}
+        onClose={() => setShowDeleteDialog(false)}
+        onSubmit={() => handleDelete()}
+      />
     </div>
   );
 
@@ -63,7 +76,7 @@ const CharacterMenu: FunctionComponent = () => {
           <div key={char.id}>
             <Character
               character={char}
-              deleteCharacter={deleteCharacter}
+              deleteCharacter={() => setShowDeleteDialog(true)}
               selectedId={selectedCharacter?.id.toString()}
             />
           </div>
@@ -77,6 +90,13 @@ const CharacterMenu: FunctionComponent = () => {
   async function handleCreate(char: CreateCharacterRequest) {
     setShowCreateDialog(false);
     await createCharacter(char);
+  }
+
+  async function handleDelete() {
+    if (selectedCharacter != null) {
+      await deleteCharacter(selectedCharacter.id);
+      setShowDeleteDialog(false);
+    }
   }
 };
 

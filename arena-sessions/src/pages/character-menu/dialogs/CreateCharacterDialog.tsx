@@ -47,6 +47,7 @@ const CreateCharacterDialog: FunctionComponent<
   return (
     <StyledDialog
       isVisible={isVisible}
+      submitText="Create"
       title="Create character"
       onClose={onClose}
       onSubmit={() => handleSubmit()}
