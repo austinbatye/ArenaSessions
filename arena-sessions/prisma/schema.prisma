@@ -4,27 +4,22 @@ generator client {
 }
 
 datasource db {
-  provider            = "postgresql"
-  url                 = env("DATABASE_URL")
-  schemas             = ["base"]
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model characters {
-  id    String     @id
-  name  String @db.Text
-  class String @db.Text
-  spec  String @db.Text
-
-  @@schema("base")
+model Characters {
+  id    String @id(map: "characters_pkey") @unique(map: "Character_id_key")
+  name  String
+  class String
+  spec  String
 }
 
-model matches {
-  id        String     @id
-  charId    String     @db.Text
-  isWin     Boolean    @default(false)
-  arena     String     @db.Text
-  team      String     @db.Text
-  enemy     String     @db.Text
-
-  @@schema("base")
+model Matches {
+  id     String   @id(map: "matches_pkey") @unique
+  charId String
+  isWin  Boolean?
+  arena  String
+  team   String
+  enemy  String
 }

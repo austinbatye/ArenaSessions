@@ -114,9 +114,9 @@ export function useCharacters() {
       //   } as CreateMatchRequest),
       // });
 
-      await fetch('/api/matches/all/123', {
-        method: 'GET',
-      });
+      // await fetch('/api/matches/all/123', {
+      //   method: 'GET',
+      // });
 
       const characters: Character[] = await response.json();
       setCharacters(characters);

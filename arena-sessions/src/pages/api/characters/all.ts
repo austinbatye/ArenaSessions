@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { prisma } from '@/apis';
 import { Character } from '@/models';
+import { prisma } from '@/prisma';
 
 /**
  * GET /api/characters/all
