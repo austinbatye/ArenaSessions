@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Character } from '@/models';
 import { CreateCharacterRequest } from '@/pages/api/characters/create';
 import { AppDispatch, clearCharacterSelection } from '@/store';
+import { CreateMatchRequest } from '@/pages/api/matches/create';
 
 const getAllRoute = '/api/characters/all';
 const createRoute = '/api/characters/create';
@@ -70,7 +71,7 @@ export function useCharacters() {
     []
   );
 
-  const deleteCharacter = useCallback(async (id: number) => {
+  const deleteCharacter = useCallback(async (id: string) => {
     setIsLoading(true);
     try {
       await fetch(`${deleteRoute}${id}`, {
@@ -95,6 +96,25 @@ export function useCharacters() {
   async function getCharacters() {
     try {
       const response = await fetch(getAllRoute, {
+        method: 'GET',
+      });
+
+      // await fetch('/api/matches/create', {
+      //   method: 'POST',
+      //   headers: {
+      //     Accept: 'application.json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     charId: '1234',
+      //     isWin: true,
+      //     arena: 'Nagrand',
+      //     team: 'elemental',
+      //     enemy: 'discipline,retribution',
+      //   } as CreateMatchRequest),
+      // });
+
+      await fetch('/api/matches/all/123', {
         method: 'GET',
       });
 

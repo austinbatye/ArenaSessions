@@ -36,9 +36,8 @@ export default async function (
     // if (duplicate != null) {
     //   throw `This character already exists.`;
     // }
-
     const result = await prisma.characters.create({
-      data: req.body,
+      data: req.body.character,
     });
     res.json(result);
   } catch (err) {

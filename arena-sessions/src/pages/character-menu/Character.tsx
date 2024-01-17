@@ -18,7 +18,7 @@ export interface CharacterProps {
   character: Character;
   selectedId?: string;
 
-  deleteCharacter: (id: number) => void;
+  deleteCharacter: (id: string) => void;
 }
 
 /**

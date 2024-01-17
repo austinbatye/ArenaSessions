@@ -34,10 +34,6 @@ const CharacterMenu: FunctionComponent = () => {
     return <div className={styles.main} />;
   }
 
-  if (characters.length === 0) {
-    return <div className={styles.main}>Create new character</div>;
-  }
-
   return (
     <div className={styles.main}>
       <div className={styles.header}>Characters</div>
