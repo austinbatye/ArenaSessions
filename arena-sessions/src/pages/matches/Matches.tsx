@@ -1,11 +1,10 @@
 import { FunctionComponent } from 'react';
-import { Paper, TableContainer } from '@mui/material';
 
-import styles from './Matches.module.css';
 import { Match } from '@/store';
 import { ArenaMaps } from '@/utils/ArenaMaps';
 import { classSpecs } from '@/utils';
 import MatchesList from './MatchesList';
+import styles from './Matches.module.css';
 
 const Matches: FunctionComponent = () => {
   const matches = createMockMatches();
@@ -35,6 +34,7 @@ const Matches: FunctionComponent = () => {
         isWin: Math.floor(Math.random() * 100) % 2 === 0,
         map,
         team: [
+          specs[Math.floor(Math.random() * specs.length)],
           specs[Math.floor(Math.random() * specs.length)],
           specs[Math.floor(Math.random() * specs.length)],
         ],

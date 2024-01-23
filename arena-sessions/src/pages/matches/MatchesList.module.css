@@ -6,9 +6,14 @@
     color: #FFFF00;
 }
 
+.icon {
+    height: 30px;
+}
+
 .versus {
-    color: #FFFF00;
     display: flex;
+    justify-content: center;
+    color: #FFFF00;
     gap: 8px;
 }
 
