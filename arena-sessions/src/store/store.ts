@@ -1,8 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { characterSlice } from '.';
+import { characterSlice, matchSlice } from '.';
 
 const rootReducer = combineReducers({
   character: characterSlice.reducer,
+  matches: matchSlice.reducer,
 });
 
 const store = configureStore({ reducer: rootReducer });

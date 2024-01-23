@@ -1,42 +1,39 @@
 'use client';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useCharacters } from '@/hooks/useCharacters';
 import Character from './Character';
 import CreateCharacterDialog from './dialogs/CreateCharacterDialog';
 import StyledButton from '@/tools/StyledButton';
 import { CreateCharacterRequest } from '../api/characters/create';
-import { AppDispatch, selectSelectedCharacter } from '@/store';
+import {
+  AppDispatch,
+  createCharacter,
+  deleteCharacter,
+  selectCharacters,
+  selectSelectedCharacter,
+} from '@/store';
 import DeleteCharacterDialog from './dialogs/DeleteCharacterDialog';
 import styles from './CharacterMenu.module.css';
+import { Character as CharModel } from '@/models';
 
 /**
  * Component responsible for displaying the character menu on the right side of the screen
  */
 const CharacterMenu: FunctionComponent = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const characters = useSelector(selectCharacters);
   const selectedCharacter = useSelector(selectSelectedCharacter);
 
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] =
     useState<boolean>(false);
 
-  // Characters hook
-  const { isLoading, characters, createCharacter, deleteCharacter } =
-    useCharacters();
-
   useEffect(() => {
     setShowCreateDialog(false);
     setShowDeleteDialog(false);
   }, []);
-
-  if (isLoading) {
-    return <div className={styles.main} />;
-  }
-
-  if (characters.length === 0) {
-    return <div className={styles.main}>Create new character</div>;
-  }
 
   return (
     <div className={styles.main}>
@@ -68,33 +65,37 @@ const CharacterMenu: FunctionComponent = () => {
   function getMainContent(): JSX.Element {
     let main = null;
 
-    if (!isLoading) {
-      if (characters.length === 0) {
-        main = <div>Create new character</div>;
-      } else {
-        main = characters.map((char) => (
-          <div key={char.id}>
-            <Character
-              character={char}
-              deleteCharacter={() => setShowDeleteDialog(true)}
-              selectedId={selectedCharacter?.id.toString()}
-            />
-          </div>
-        ));
-      }
+    if (characters.length === 0) {
+      main = <div>Create new character</div>;
+    } else {
+      main = characters.map((char) => (
+        <div key={char.id}>
+          <Character
+            character={char}
+            deleteCharacter={() => setShowDeleteDialog(true)}
+            selectedId={selectedCharacter?.id.toString()}
+          />
+        </div>
+      ));
     }
 
     return <div className={styles.list}>{main}</div>;
   }
 
-  async function handleCreate(char: CreateCharacterRequest) {
+  function handleCreate(char: CreateCharacterRequest) {
+    const character: CharModel = {
+      id: `${characters.length}`,
+      name: char.name,
+      class: char.class,
+      spec: char.spec,
+    };
     setShowCreateDialog(false);
-    await createCharacter(char);
+    dispatch(createCharacter(character));
   }
 
-  async function handleDelete() {
+  function handleDelete() {
     if (selectedCharacter != null) {
-      await deleteCharacter(selectedCharacter.id);
+      dispatch(deleteCharacter(selectedCharacter));
       setShowDeleteDialog(false);
     }
   }
