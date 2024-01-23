@@ -3,4 +3,5 @@
     padding: 25px;
     align-self: stretch;
     overflow: hidden;
+    height: 90%; /* 10% for header */
 }
