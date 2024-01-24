@@ -2,12 +2,8 @@ import { FunctionComponent } from 'react';
 import cx from 'classnames';
 import { useDispatch } from 'react-redux';
 
-import { Character } from '@/models';
-import {
-  capitalizeOnlyFirstLetter,
-  getClassColor,
-  getDeDupedSpec,
-} from '@/utils';
+import { Character as CharacterModel } from '@/models';
+import { getClassColor, getDeDupedSpec } from '@/utils';
 import { IconButton } from '@fluentui/react';
 import { AppDispatch, selectCharacter } from '@/store';
 import styles from './Character.module.css';
@@ -15,10 +11,10 @@ import styles from './Character.module.css';
  * Props for the Character menu component
  */
 export interface CharacterProps {
-  character: Character;
+  character: CharacterModel;
   selectedId?: string;
 
-  deleteCharacter: (id: number) => void;
+  deleteCharacter: (id: string) => void;
 }
 
 /**
@@ -46,15 +42,11 @@ const Character: FunctionComponent<CharacterProps> = (props) => {
       }
     >
       <div>
-        <div className={styles.name}>
-          {capitalizeOnlyFirstLetter(character.name)}
-        </div>
+        <div className={styles.name}>{character.name}</div>
         <div>
           Level 70{' '}
           <span style={{ color: getClassColor(character.class) }}>
-            {capitalizeOnlyFirstLetter(
-              `${getDeDupedSpec(character.spec)} ${character.class}`
-            )}
+            {`${getDeDupedSpec(character.spec)} ${character.class}`}
           </span>
         </div>
       </div>

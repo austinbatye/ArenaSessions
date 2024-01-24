@@ -1,3 +1,4 @@
+'use client';
 import { AppDispatch, Match, deleteMatch } from '@/store';
 import {
   TableContainer,
