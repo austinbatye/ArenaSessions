@@ -9,8 +9,8 @@ import StyledButton from '@/tools/StyledButton';
 import { CreateCharacterRequest } from '../api/characters/create';
 import {
   AppDispatch,
-  createCharacter,
-  deleteCharacter,
+  createCharacterDispatch,
+  deleteCharacterDispatch,
   selectCharacters,
   selectSelectedCharacter,
 } from '@/store';
@@ -90,12 +90,12 @@ const CharacterMenu: FunctionComponent = () => {
       spec: char.spec,
     };
     setShowCreateDialog(false);
-    dispatch(createCharacter(character));
+    dispatch(createCharacterDispatch(character));
   }
 
   function handleDelete() {
     if (selectedCharacter != null) {
-      dispatch(deleteCharacter(selectedCharacter));
+      dispatch(deleteCharacterDispatch(selectedCharacter));
       setShowDeleteDialog(false);
     }
   }

@@ -1,11 +1,17 @@
 .main {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 30%;
     border: 2px solid #575958;
     border-radius: 6px;
     padding: 15px;
     gap: 10px;
+}
+
+.select {
+    display: flex;
+    justify-content: center;
+    padding-top: 32px;
 }
 
 .header {
@@ -14,6 +20,7 @@
     font-size: 16px;
     align-self: center;
     padding-bottom: 15px;
+    gap: 6px;
 }
 
 .list {
@@ -27,5 +34,4 @@
     border-bottom: 1px solid #575958;
     border-radius: 3px;
     gap: 10px;
-    /* justify-content: baseline; */
 }

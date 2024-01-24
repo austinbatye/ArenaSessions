@@ -1,9 +1,5 @@
-import {
-  AppDispatch,
-  Match,
-  deleteMatch,
-  selectCharacters,
-} from '@/store';
+'use client';
+import { AppDispatch, Match, deleteMatch } from '@/store';
 import {
   TableContainer,
   Paper,
@@ -13,10 +9,9 @@ import {
   TableCell,
   TableBody,
 } from '@mui/material';
-import { FunctionComponent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IconButton } from '@fluentui/react';
-import { getColor, getDeDupedSpec } from '@/utils';
+import { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
+import { getClassFromSpec, getDeDupedSpec, specIcons } from '@/utils';
 
 import styles from './MatchesList.module.css';
 
@@ -26,10 +21,7 @@ export interface MatchesListProps {
 
 const MatchesList: FunctionComponent<MatchesListProps> = (props) => {
   const { matches } = props;
-  const characters = useSelector(selectCharacters);
   const dispatch = useDispatch<AppDispatch>();
-
-  let rows = createRows(matches);
 
   return (
     <TableContainer
@@ -60,6 +52,7 @@ const MatchesList: FunctionComponent<MatchesListProps> = (props) => {
               Result
             </TableCell>
             <TableCell
+              align="center"
               className={styles.cell}
               style={{ width: '63%' }}
             >
@@ -78,7 +71,7 @@ const MatchesList: FunctionComponent<MatchesListProps> = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((r, index) => {
+          {createRows(matches).map((r, index) => {
             return (
               <TableRow
                 key={index}
@@ -94,7 +87,7 @@ const MatchesList: FunctionComponent<MatchesListProps> = (props) => {
                 >
                   {r.outcome}
                 </TableCell>
-                <TableCell>{r.compositions}</TableCell>
+                <TableCell align="center">{r.compositions}</TableCell>
                 <TableCell align="right" className={styles.cell}>
                   {r.arena}
                 </TableCell>
@@ -129,37 +122,24 @@ const MatchesList: FunctionComponent<MatchesListProps> = (props) => {
   function renderVersus(match: Match): JSX.Element {
     return (
       <div className={styles.versus}>
-        {renderTeam(match)}
+        {renderTeam(match.team)}
         vs
-        {renderEnemy(match)}
+        {renderTeam(match.enemy)}
       </div>
     );
   }
 
-  function renderTeam(match: Match): JSX.Element {
-    const elements: JSX.Element[] = [
-      renderWithClassColor(
-        characters.find((c) => c.id === match.charId)?.spec ?? ''
-      ),
-    ];
-    match.team.forEach((t) => {
-      elements.push(renderWithClassColor(t));
-    });
-    return (
-      <div className={styles.team}>{elements.map((e) => e)}</div>
-    );
-  }
-
-  function renderWithClassColor(value: string): JSX.Element {
-    const color = getColor(value);
-
-    return <span style={{ color }}>{getDeDupedSpec(value)}</span>;
-  }
-
-  function renderEnemy(match: Match): JSX.Element {
+  function renderTeam(team: string[]): JSX.Element {
     const elements: JSX.Element[] = [];
-    match.enemy.forEach((t) => {
-      elements.push(renderWithClassColor(t));
+    team.forEach((t) => {
+      elements.push(
+        <img
+          key={Math.random()}
+          className={styles.icon}
+          src={specIcons.get(t)}
+          title={`${getDeDupedSpec(t)} ${getClassFromSpec(t)}`}
+        />
+      );
     });
     return (
       <div className={styles.team}>{elements.map((e) => e)}</div>

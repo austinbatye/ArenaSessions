@@ -2,6 +2,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { AppState } from './store';
 import { Character } from '@/models';
+import { capitalizeOnlyFirstLetter } from '@/utils';
+import { createMockMatches, deleteMatches } from '.';
 
 // Interface for the reducer's state
 export interface CharacterState {
@@ -15,6 +17,18 @@ const initialState: CharacterState = {
   selectedCharacter: null,
 };
 
+export const createCharacterDispatch =
+  (character: Character) => async (dispatch: any) => {
+    dispatch(createCharacter(character));
+    dispatch(createMockMatches(character.spec));
+  };
+
+export const deleteCharacterDispatch =
+  (character: Character) => async (dispatch: any) => {
+    dispatch(deleteCharacter(character));
+    dispatch(deleteMatches());
+  };
+
 export const characterSlice = createSlice({
   name: 'characterSlice',
   initialState,
@@ -26,8 +40,16 @@ export const characterSlice = createSlice({
       state: CharacterState,
       action: PayloadAction<Character>
     ) => {
-      const updatedCharacters = [...state.characters, action.payload];
+      const formattedCharacter = {
+        ...action.payload,
+        name: capitalizeOnlyFirstLetter(action.payload.name),
+      };
+      const updatedCharacters = [
+        ...state.characters,
+        formattedCharacter,
+      ];
       state.characters = updatedCharacters;
+      state.selectedCharacter = formattedCharacter;
     },
     deleteCharacter: (
       state: CharacterState,
@@ -36,7 +58,12 @@ export const characterSlice = createSlice({
       const updatedCharacters = state.characters.filter(
         (c) => c.id !== action.payload.id
       );
+      const newSelectedCharacter =
+        state.selectedCharacter?.id === action.payload.id
+          ? null
+          : state.selectedCharacter;
       state.characters = updatedCharacters;
+      state.selectedCharacter = newSelectedCharacter;
     },
     selectCharacter: (
       state: CharacterState,
